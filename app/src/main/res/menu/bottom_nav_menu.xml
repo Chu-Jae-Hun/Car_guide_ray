@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_item1"
+        android:icon="@drawable/inter"
+        android:title="내장" />
+
+    <item
+        android:id="@+id/navigation_item2"
+        android:icon="@drawable/exter"
+        android:title="외장" />
+
+    <item
+        android:id="@+id/navigation_item3"
+        android:icon="@drawable/account_book"
+        android:title="차계부" />
+
+    <item
+        android:id="@+id/navigation_item4"
+        android:icon="@drawable/calender"
+        android:title="캘린더" />
+
+    <item
+        android:id="@+id/navigation_item5"
+        android:icon="@drawable/repair"
+        android:title="정비소" />
+
+</menu>
