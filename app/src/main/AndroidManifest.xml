@@ -13,19 +13,19 @@
         android:theme="@style/Theme.Car_guide_ray"
         tools:targetApi="31">
         <activity
+            android:name=".OuterActivity"
+            android:exported="false" />
+        <activity
             android:name=".InnerActivity"
             android:exported="false" />
         <activity
             android:name=".RepairActivity"
             android:exported="false" />
         <activity
-            android:name=".AddscheduleActivity"
+            android:name=".AddscheduleActivity_needtochange"
             android:exported="false" />
         <activity
-            android:name=".AccountbookAcitivity"
-            android:exported="false" />
-        <activity
-            android:name=".OuterActivity"
+            android:name=".AccountbookActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

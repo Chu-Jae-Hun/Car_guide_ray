@@ -7,14 +7,13 @@ import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class AddscheduleActivity extends AppCompatActivity {
+public class AddscheduleActivity_needtochange extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addschedule);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.navigation_item4);
+        bottomNavigationView.setSelectedItemId(R.id.navigation_item3);
 
         // 초기 화면 설정
 
@@ -31,13 +30,13 @@ public class AddscheduleActivity extends AppCompatActivity {
                 finish();
                 return true;
             } else if (itemId == R.id.navigation_item3) {
-                startActivity(new Intent(getApplicationContext(), AccountbookAcitivity.class));
+                startActivity(new Intent(getApplicationContext(), AccountbookActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();
                 return true;
-            } else if (itemId == R.id.navigation_item4) {
+            } else if (itemId == R.id.navigation_item3) {
                 return true;
-            } else if (itemId == R.id.navigation_item5) {
+            } else if (itemId == R.id.navigation_item4) {
                 startActivity(new Intent(getApplicationContext(), RepairActivity.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 finish();

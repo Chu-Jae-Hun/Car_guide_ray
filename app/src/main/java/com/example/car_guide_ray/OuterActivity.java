@@ -1,49 +1,57 @@
 package com.example.car_guide_ray;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.car_guide_ray.ui.home.HomeFragment;
 
 public class OuterActivity extends AppCompatActivity {
+
+    com.example.car_guide_ray.databinding.ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_outer);
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setSelectedItemId(R.id.navigation_item1);
+        binding = com.example.car_guide_ray.databinding.ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        // 초기 화면 설정
+        replaceFragment(new HomeFragment());
+        binding.bottomNavigation.setBackground(null);
 
-        bottomNavigationView.setOnItemSelectedListener(item -> {
+        binding.bottomNavigation.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.navigation_item1) {
+                replaceFragment(new InnerFragment());
                 startActivity(new Intent(getApplicationContext(), InnerActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
                 return true;
-            } else if (itemId == R.id.navigation_item2) {
+            }
+            else if (itemId == R.id.navigation_item2) {
+                replaceFragment(new OuterFragment());
+                startActivity(new Intent(getApplicationContext(), OuterActivity.class));
                 return true;
             } else if (itemId == R.id.navigation_item3) {
-                startActivity(new Intent(getApplicationContext(), AccountbookAcitivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
+                replaceFragment(new AccountbookFragment());
+                startActivity(new Intent(getApplicationContext(), AccountbookActivity.class));
                 return true;
-            } else if (itemId == R.id.navigation_item4) {
-                startActivity(new Intent(getApplicationContext(), AddscheduleActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
-                return true;
-            } else if (itemId == R.id.navigation_item5) {
+            }
+            else if (itemId == R.id.navigation_item4) {
+                replaceFragment(new RepairFragment());
                 startActivity(new Intent(getApplicationContext(), RepairActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                finish();
                 return true;
             }
             return false;
         });
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, fragment);
+        fragmentTransaction.commit();
     }
 }
