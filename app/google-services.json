@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "362411273659",
+    "firebase_url": "https://ray-login-project-default-rtdb.firebaseio.com",
+    "project_id": "ray-login-project",
+    "storage_bucket": "ray-login-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:362411273659:android:0291042d673f1c0058289e",
+        "android_client_info": {
+          "package_name": "com.example.car_guide_ray"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "362411273659-29vus1uitp4mq1qmvfqrbvvadkbos0je.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZRn7WXEnctav9AD5vW0C3l7II6BiGNQM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "362411273659-29vus1uitp4mq1qmvfqrbvvadkbos0je.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
