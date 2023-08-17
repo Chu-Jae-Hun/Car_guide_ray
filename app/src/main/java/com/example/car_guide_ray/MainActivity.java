@@ -2,60 +2,97 @@ package com.example.car_guide_ray;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import androidx.appcompat.widget.Toolbar;
 
+import com.example.car_guide_ray.ui.home.HomeFragment;
+import com.google.android.material.navigation.NavigationView;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
 import com.example.car_guide_ray.databinding.ActivityMainBinding;
-import com.example.car_guide_ray.ui.home.HomeFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    ActivityMainBinding binding;
+    //ActivityMainBinding binding;
+    FloatingActionButton fab;
+    DrawerLayout drawerLayout;
+    BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_main);
 
-        replaceFragment(new HomeFragment());
-        binding.bottomNavigation.setBackground(null);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        fab = findViewById(R.id.fab);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
-        binding.bottomNavigation.setOnItemSelectedListener(item -> {
+        setSupportActionBar(toolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        if(savedInstanceState == null){
+            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new HomeFragment()).commit(); // 초기화 단계 Homefragment 만들건지 수정 필요.
+            navigationView.setCheckedItem(R.id.navigation_home); //마찬가지 수정 필요
+        }
+
+        //binding = ActivityMainBinding.inflate(getLayoutInflater());
+        //setContentView(binding.getRoot());
+
+        bottomNavigationView.setBackground(null);
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.navigation_item1) {
                 replaceFragment(new InnerFragment());
-                startActivity(new Intent(getApplicationContext(), InnerActivity.class));
+                //startActivity(new Intent(getApplicationContext(), InnerActivity.class));
                 return true;
 
             }
             else if (itemId == R.id.navigation_item2) {
                 replaceFragment(new OuterFragment());
-                startActivity(new Intent(getApplicationContext(), OuterActivity.class));
+                //startActivity(new Intent(getApplicationContext(), OuterActivity.class));
                 return true;
             } else if (itemId == R.id.navigation_item3) {
                 replaceFragment(new AccountbookFragment());
-                startActivity(new Intent(getApplicationContext(), AccountbookActivity.class));
+                //startActivity(new Intent(getApplicationContext(), AccountbookActivity.class));
                 return true;
             }
             else if (itemId == R.id.navigation_item4) {
                 replaceFragment(new RepairFragment());
-                startActivity(new Intent(getApplicationContext(), RepairActivity.class));
+                //startActivity(new Intent(getApplicationContext(), RepairActivity.class));
                 return true;
             }
             return false;
         });
+
+        //home버튼 눌렀을 때 (home화면에 대한 회의 필요..)
+        fab.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                replaceFragment(new HomeFragment());
+            }
+        });
     }
 
+    //outside onCreate
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, fragment);
         fragmentTransaction.commit();
     }
+
         // 초기 화면 설정
 
        /* bottomNavigationView.setOnItemSelectedListener(item -> {

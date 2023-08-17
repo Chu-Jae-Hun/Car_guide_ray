@@ -9,8 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.car_guide_ray.databinding.ActivityMainBinding;
-import com.example.car_guide_ray.ui.home.HomeFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class RepairActivity extends AppCompatActivity {
 
@@ -22,28 +20,27 @@ public class RepairActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        replaceFragment(new HomeFragment());
         binding.bottomNavigation.setBackground(null);
 
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.navigation_item1) {
                 replaceFragment(new InnerFragment());
-                startActivity(new Intent(getApplicationContext(), InnerActivity.class));
+                //startActivity(new Intent(getApplicationContext(), InnerActivity.class));
                 return true;
             }
             else if (itemId == R.id.navigation_item2) {
                 replaceFragment(new OuterFragment());
-                startActivity(new Intent(getApplicationContext(), OuterActivity.class));
+                //startActivity(new Intent(getApplicationContext(), OuterActivity.class));
                 return true;
             } else if (itemId == R.id.navigation_item3) {
                 replaceFragment(new AccountbookFragment());
-                startActivity(new Intent(getApplicationContext(), AccountbookActivity.class));
+                //startActivity(new Intent(getApplicationContext(), AccountbookActivity.class));
                 return true;
             }
             else if (itemId == R.id.navigation_item4) {
                 replaceFragment(new RepairFragment());
-                startActivity(new Intent(getApplicationContext(), RepairActivity.class));
+                //startActivity(new Intent(getApplicationContext(), RepairActivity.class));
                 return true;
             }
             return false;

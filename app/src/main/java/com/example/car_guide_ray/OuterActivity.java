@@ -8,8 +8,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.car_guide_ray.ui.home.HomeFragment;
-
 public class OuterActivity extends AppCompatActivity {
 
     com.example.car_guide_ray.databinding.ActivityMainBinding binding;
@@ -20,7 +18,6 @@ public class OuterActivity extends AppCompatActivity {
         binding = com.example.car_guide_ray.databinding.ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        replaceFragment(new HomeFragment());
         binding.bottomNavigation.setBackground(null);
 
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
