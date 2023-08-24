@@ -3,6 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+
+    <uses-feature android:name="android.hardware.camera" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.front" android:required="false"/>
+    <uses-feature android:name="android.hardware.camera.front.autofocus" android:required="false"/>
+
+    <supports-screens android:resizeable="true"
+        android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:anyDensity="true"
+        />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -20,19 +33,20 @@
             android:name=".SignupActivity"
             android:exported="false" />
         <activity
-            android:name=".OuterActivity"
+            android:name=".OuterFragment"
+            android:screenOrientation="landscape"
             android:exported="false" />
         <activity
-            android:name=".InnerActivity"
+            android:name=".InnerFragment"
             android:exported="false" />
         <activity
-            android:name=".RepairActivity"
+            android:name=".RepairFragment"
             android:exported="false" />
         <activity
             android:name=".AddscheduleActivity_needtochange"
             android:exported="false" />
         <activity
-            android:name=".AccountbookActivity"
+            android:name=".AccountbookFragment"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"

@@ -17,3 +17,4 @@ include ':app'
 
 include ':openCVLibrary480'
 include ':sdk'
+include ':OpenCV'

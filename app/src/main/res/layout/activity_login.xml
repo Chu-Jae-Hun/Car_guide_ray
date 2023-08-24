@@ -54,6 +54,7 @@
                 android:layout_marginTop="40dp"
                 android:padding="8dp"
                 android:hint="비밀번호"
+                android:inputType="textPassword"
                 android:drawableLeft="@drawable/baseline_lock_24"
                 android:drawablePadding="8dp"
                 android:textColor="@color/black"/>

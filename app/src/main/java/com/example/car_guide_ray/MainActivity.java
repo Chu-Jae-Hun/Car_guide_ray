@@ -1,23 +1,20 @@
 package com.example.car_guide_ray;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import androidx.appcompat.widget.Toolbar;
 
-import com.example.car_guide_ray.ui.home.HomeFragment;
-import com.google.android.material.navigation.NavigationView;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-
-import com.example.car_guide_ray.databinding.ActivityMainBinding;
+import com.example.car_guide_ray.ui.home.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,22 +50,22 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
-            if (itemId == R.id.navigation_item1) {
+            if (itemId == R.id.navigation_item1) { //내장
                 replaceFragment(new InnerFragment());
                 //startActivity(new Intent(getApplicationContext(), InnerActivity.class));
                 return true;
 
             }
-            else if (itemId == R.id.navigation_item2) {
+            else if (itemId == R.id.navigation_item2) { //외장
                 replaceFragment(new OuterFragment());
                 //startActivity(new Intent(getApplicationContext(), OuterActivity.class));
                 return true;
-            } else if (itemId == R.id.navigation_item3) {
+            } else if (itemId == R.id.navigation_item3) { //차계부
                 replaceFragment(new AccountbookFragment());
                 //startActivity(new Intent(getApplicationContext(), AccountbookActivity.class));
                 return true;
             }
-            else if (itemId == R.id.navigation_item4) {
+            else if (itemId == R.id.navigation_item4) { //정비소
                 replaceFragment(new RepairFragment());
                 //startActivity(new Intent(getApplicationContext(), RepairActivity.class));
                 return true;

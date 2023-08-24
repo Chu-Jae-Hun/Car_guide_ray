@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.car_guide_ray.databinding.ActivityMainBinding;
@@ -25,12 +24,12 @@ public class RepairActivity extends AppCompatActivity {
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.navigation_item1) {
-                replaceFragment(new InnerFragment());
+                replaceFragment(new OuterFragment());
                 //startActivity(new Intent(getApplicationContext(), InnerActivity.class));
                 return true;
             }
             else if (itemId == R.id.navigation_item2) {
-                replaceFragment(new OuterFragment());
+                replaceFragment(new InnerFragment());
                 //startActivity(new Intent(getApplicationContext(), OuterActivity.class));
                 return true;
             } else if (itemId == R.id.navigation_item3) {
