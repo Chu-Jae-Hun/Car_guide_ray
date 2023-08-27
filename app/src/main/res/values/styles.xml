@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<style name="CustomDatePickerDialog" parent="ThemeOverlay.MaterialComponents.Dialog">
-    <item name="android:datePickerStyle">@style/CustomDatePicker</item>
-</style>
-
-<style name="CustomDatePicker" parent="android:Widget.Material.DatePicker">
-<item name="android:layout_width">match_parent</item>
-<item name="android:layout_height">match_parent</item>
-</style>
-
-    <style name="CalendarDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog">
-        <item name="android:windowMinWidthMajor">100%</item>
-        <item name="android:windowMinWidthMinor">100%</item>
+    <style name = "AppTheme">
+        <item name="windowNoTitle">true</item>
     </style>
 </resources>

@@ -1,8 +1,10 @@
 package com.example.car_guide_ray;
 
 import android.os.Bundle;
-import android.view.View;
+import android.view.MenuItem;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,7 +18,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     //ActivityMainBinding binding;
     FloatingActionButton fab;
@@ -74,12 +76,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //home버튼 눌렀을 때 (home화면에 대한 회의 필요..)
-        fab.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                replaceFragment(new HomeFragment());
-            }
-        });
+        fab.setOnClickListener(view -> replaceFragment(new HomeFragment()));
     }
 
     //outside onCreate
@@ -88,6 +85,37 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frame_layout, fragment);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item){
+        int nav_itemId = item.getItemId();
+        if(nav_itemId == R.id.nav_calender) { //일정
+            replaceFragment(new CalendarFragment());
+            //getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new CalendarFragment()).commit();
+            return true;
+        }
+        else if(nav_itemId == R.id.nav_share) { //공유
+            replaceFragment(new ShareFragment());
+            //getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new CalendarFragment()).commit();
+            return true;
+        }
+        else if(nav_itemId == R.id.nav_setting) { //설정
+            replaceFragment(new SettingFragment());
+            //getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new CalendarFragment()).commit();
+            return true;
+        }
+        else if(nav_itemId == R.id.nav_info) { //정보
+            replaceFragment(new AboutFragment());
+            //getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new CalendarFragment()).commit();
+            return true;
+        }
+        else if(nav_itemId == R.id.nav_logout) { //로그아웃
+            Toast.makeText(this, "LOGOUT!", Toast.LENGTH_SHORT).show();
+            //getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new CalendarFragment()).commit();
+            return true;
+        }
+        return false;
     }
 
         // 초기 화면 설정
