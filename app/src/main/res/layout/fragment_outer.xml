@@ -9,12 +9,12 @@
     tools:context=".OuterFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <org.opencv.android.JavaCameraView
+    <!--<org.opencv.android.JavaCameraView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/CameraView"
-        opencv:show_fps="true" />
+        opencv:show_fps="true" />-->
 
     <!--<TextView
         android:layout_width="match_parent"

@@ -1,7 +1,12 @@
 package com.example.car_guide_ray;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +33,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Button moveButton;
+        moveButton = findViewById(R.id.moveButton);
+        moveButton.setOnClickListener(onClickListener);
+
+        // 최초 실행 여부 판단
+        SharedPreferences pref = getSharedPreferences("checkFirst", Activity.MODE_PRIVATE);
+        boolean checkFirst = pref.getBoolean("checkFirst", false);
+
+        //false일 경우 최초 실행
+        if(!checkFirst){
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putBoolean("checkFirst", true);
+            editor.apply();
+            finish();
+
+            Intent intent = new Intent(MainActivity.this, TutorialActivity.class);
+            startActivity(intent);
+        }
+
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         fab = findViewById(R.id.fab);
@@ -59,8 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
             else if (itemId == R.id.navigation_item2) { //외장
-                replaceFragment(new OuterFragment());
-                //startActivity(new Intent(getApplicationContext(), OuterActivity.class));
+                startActivity(new Intent(getApplicationContext(), OuterActivity.class));
                 return true;
             } else if (itemId == R.id.navigation_item3) { //차계부
                 replaceFragment(new AccountbookFragment());
@@ -79,6 +103,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(view -> replaceFragment(new HomeFragment()));
     }
 
+    Button.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(MainActivity.this, TutorialActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    };
+
     //outside onCreate
     private void replaceFragment(Fragment fragment){
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -91,14 +124,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(@NonNull MenuItem item){
         int nav_itemId = item.getItemId();
         if(nav_itemId == R.id.nav_calender) { //일정
-            replaceFragment(new CalendarFragment());
-            //getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new CalendarFragment()).commit();
+            startActivity(new Intent(getApplicationContext(), CalendarActivity.class));
             return true;
         }
         else if(nav_itemId == R.id.nav_share) { //공유
             replaceFragment(new ShareFragment());
-            //getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new CalendarFragment()).commit();
+            //replaceFragment(new ShareFragment());
             return true;
+            //getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout, new CalendarFragment()).commit();
         }
         else if(nav_itemId == R.id.nav_setting) { //설정
             replaceFragment(new SettingFragment());

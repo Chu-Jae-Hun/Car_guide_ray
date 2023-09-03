@@ -15,6 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "Car_guide_ray"
 include ':app'
 
-include ':openCVLibrary480'
-include ':sdk'
 include ':OpenCV'

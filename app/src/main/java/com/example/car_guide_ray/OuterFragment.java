@@ -1,38 +1,113 @@
 package com.example.car_guide_ray;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
-import org.opencv.android.JavaCameraView;
+import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
 
+import java.util.Collections;
 import java.util.List;
 
 
 public class OuterFragment extends Fragment implements CameraBridgeViewBase.CvCameraViewListener2 {
 
-    CameraBridgeViewBase cameraBridgeViewBase;
+    private static final String TAG = "OuterFragment cam";
+
+    private CameraBridgeViewBase mOpenCvCameraView;
+    private final boolean mIsJavaCamera = true;
+    private MenuItem mItemSwitchCamera = null;
+
+    private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(getActivity()) {
+        @Override
+        public void onManagerConnected(int status) {
+            if (status == LoaderCallbackInterface.SUCCESS) {
+                Log.i(TAG, "OpenCV loaded successfully");
+                mOpenCvCameraView.enableView();
+            } else {
+                super.onManagerConnected(status);
+            }
+        }
+    };
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_outer, container, false);
+        Log.i(TAG, "called onCreate");
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+
+        mOpenCvCameraView = (CameraBridgeViewBase)v.findViewById(R.id.CameraView);
+
+        mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
+
+        mOpenCvCameraView.setCvCameraViewListener(OuterFragment.this);
+
+        return v;
+    }
+
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        if (mOpenCvCameraView != null)
+            mOpenCvCameraView.disableView();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        if (!OpenCVLoader.initDebug()) {
+            Log.d(TAG, "Internal OpenCV library not found. Using OpenCV Manager for initialization");
+            OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_0_0, getActivity(), mLoaderCallback);
+        } else {
+            Log.d(TAG, "OpenCV library found inside package. Using it!");
+            mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
+        }
+    }
+
+    @Override
+    public List<? extends CameraBridgeViewBase> getCameraViewList() {
+        return Collections.singletonList(mOpenCvCameraView);
+    }
+
+    public void onDestroy() {
+        super.onDestroy();
+        if (mOpenCvCameraView != null)
+            mOpenCvCameraView.disableView();
+    }
+
+    public void onCameraViewStarted(int width, int height) {
+    }
+
+    public void onCameraViewStopped() {
+    }
+
+    public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
+        return inputFrame.rgba();
+    }
+}
+    /*CameraBridgeViewBase cameraBridgeViewBase;
     BaseLoaderCallback baseLoaderCallback;
     int counter = 0;
     int activeCamera = CameraBridgeViewBase.CAMERA_ID_FRONT;
 
     private static final int CAMERA_PERMISSION_REQUEST_CODE = 1001;
+
+    int ac = 0;
+
 
 
     @Override
@@ -41,9 +116,11 @@ public class OuterFragment extends Fragment implements CameraBridgeViewBase.CvCa
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_outer, container, false);
         cameraBridgeViewBase = (JavaCameraView)v.findViewById(R.id.CameraView);
-        cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
-        cameraBridgeViewBase.setCvCameraViewListener(this);
 
+
+        cameraBridgeViewBase.setVisibility(SurfaceView.VISIBLE);
+        cameraBridgeViewBase.setCameraIndex(ac);
+        cameraBridgeViewBase.setCvCameraViewListener(OuterFragment.this);
 
         baseLoaderCallback = new BaseLoaderCallback(getActivity()) {
             @Override
@@ -53,6 +130,7 @@ public class OuterFragment extends Fragment implements CameraBridgeViewBase.CvCa
                 if (status == BaseLoaderCallback.SUCCESS) {
                     Log.d("OpenCV", "OpenCV initialization successful");
                     cameraBridgeViewBase.enableView();
+                    Log.d("CameraView", "enableView() called");
                 } else {
                     Log.e("OpenCV", "OpenCV initialization failed");
                     super.onManagerConnected(status);
@@ -69,13 +147,14 @@ public class OuterFragment extends Fragment implements CameraBridgeViewBase.CvCa
 
         Log.d("CameraCallback", "Camera frame received");
         Mat frame = inputFrame.rgba();
+        Log.d("FrameInfo", "Rows: " + frame.rows() + ", Cols: " + frame.cols());
 
-        /*if(counter % 2 == 0){
+        if(counter % 2 == 0){
             Core.flip(frame, frame, 1);
             Imgproc.cvtColor(frame, frame, Imgproc.COLOR_RGBA2GRAY);
         }
 
-        counter = counter + 1;*/
+        counter = counter + 1;
 
         return frame;
     }
@@ -97,12 +176,14 @@ public class OuterFragment extends Fragment implements CameraBridgeViewBase.CvCa
     public void onResume() {
         super.onResume();
 
+        //OnCheckPermission();
         if(!OpenCVLoader.initDebug()){
             Log.e("OpenCV", "OpenCV initialization failed");
             Toast.makeText(getActivity(),"There's a problem.", Toast.LENGTH_SHORT).show();
         }
         else{
             baseLoaderCallback.onManagerConnected(baseLoaderCallback.SUCCESS);
+            Log.d("callback", "callback onmanagerconnected success");
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
                 if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
@@ -116,14 +197,16 @@ public class OuterFragment extends Fragment implements CameraBridgeViewBase.CvCa
         }
     }
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // 카메라 권한 허용
+                Toast.makeText(getActivity(), "Camera permission apply", Toast.LENGTH_SHORT).show();
                 cameraBridgeViewBase.enableView();
+
+
             } else {
                 // 카메라 권한 거부
                 Toast.makeText(getActivity(), "Camera permission denied.", Toast.LENGTH_SHORT).show();
@@ -147,4 +230,4 @@ public class OuterFragment extends Fragment implements CameraBridgeViewBase.CvCa
             cameraBridgeViewBase.disableView();
         }
     }
-}
+}*/
